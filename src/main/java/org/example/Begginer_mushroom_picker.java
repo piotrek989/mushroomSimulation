@@ -9,43 +9,12 @@ public class Begginer_mushroom_picker extends Mushroom_picker {
     }
 
 
-    public static void random_walk(int x, int y) {//to bedzie rozszerzane ze względu na inne grzyby
-
-        Random liczba = new Random();
-        int random_x = x -1 + liczba.nextInt(3);//ta linijka losuje od -1 do 1 i dodaje x
-        int random_y = y -1 + liczba.nextInt(3);//ta linijka losuje od -1 do 1 i dodaj y
-        if ((random_x >= 0) && (random_y >= 0) && (random_y < Variables.FOREST_WIDTH) && (random_x < Variables.FOREST_HEIGHT) && Variables.PLANSZA.get(random_x).get(random_y).equals("X")) {
-            Variables.PLANSZA.get(random_x).set(random_y, "A");//nowa pozycja beginnera
-            Variables.PLANSZA.get(x).set(y, "X");//stare pole staje się polem X
-                for (int i = 0; i < Variables.beginnersList.size(); i++) {//sprawdzamy który z tych begginerów ma taka pozycje i zmieniamy mu ją
-                    if (Variables.beginnersList.get(i).position_x == x && Variables.beginnersList.get(i).position_y == y) {
-                        Variables.beginnersList.get(i).position_x = random_x;
-                        Variables.beginnersList.get(i).position_y = random_y;
-                        break;//wychodzimy bo juz znaleźliśmy
-                    }
-                }
-
-
-        }
-        else{
-            outerLoop:
-            for (int k = -1; k <= 1; k++) {
-                for (int p = -1; p <= 1; p++) {
-                    random_x = k + x;
-                    random_y = p + y;
-                    if ((random_x >= 0) && (random_y >= 0) && (random_y < Variables.FOREST_WIDTH) && (random_x < Variables.FOREST_HEIGHT) && (Variables.PLANSZA.get(random_x).get(random_y).equals("X"))) {
-                        Variables.PLANSZA.get(random_x).set(random_y, "A");
-                        Variables.PLANSZA.get(x).set(y, "X");//stare pole staje się polem X
-                        for(int i = 0;i<Variables.beginnersList.size();i++){//sprawdzamy który z tych begginerów ma taka pozycje i zmieniamy mu ją
-                            if(Variables.beginnersList.get(i).position_x == x && Variables.beginnersList.get(i).position_y == y){
-                                Variables.beginnersList.get(i).position_x = random_x;
-                                Variables.beginnersList.get(i).position_y = random_y;
-                                break;//wychodzimy bo juz znaleźliśmy
-                            }
-                        }
-                        break outerLoop;//wychodzi z dwóch pętli for gdy to mozliwe
-                    }
-                }
+    public static void change_position_after_random_walk(int x, int y, int random_x, int random_y){
+        for (int i = 0; i < Variables.beginnersList.size(); i++) {//sprawdzamy który z tych begginerów ma taka pozycje i zmieniamy mu ją
+            if (Variables.beginnersList.get(i).position_x == x && Variables.beginnersList.get(i).position_y == y) {
+                Variables.beginnersList.get(i).position_x = random_x;
+                Variables.beginnersList.get(i).position_y = random_y;
+                break;//wychodzimy bo juz znaleźliśmy
             }
         }
     }
@@ -90,7 +59,6 @@ public class Begginer_mushroom_picker extends Mushroom_picker {
         }
     }
     public static void interaction_with_hallucination(int x, int y){//funkcja bezuzyteczna dla beginner bo on i tak nic nie robi z tym grzybem
-        System.out.println("coś");
     }
 
 }
