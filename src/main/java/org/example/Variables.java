@@ -8,7 +8,7 @@ public class Variables {
     public static final double PERCENT_OF_TOXIC = 50;
     public static final double PERCENT_OF_HALLUCINATION = 0.0;
     public static final int beginnerPickers = 10;
-    public static final int intermediatePickers = 10;
+    public static final int intermediatePickers = 10;//
     public static final int advancedPickers = 10;
     public static int NONTOXIC_MUSH = MUSHROOMS*(100-(int)PERCENT_OF_HALLUCINATION-(int) PERCENT_OF_TOXIC)/100;//liczba zdrowych grzybow
     public static int TOXIC_MUSH = Variables.MUSHROOMS*(int)Variables.PERCENT_OF_TOXIC/100;//liczba grzybow toxic
