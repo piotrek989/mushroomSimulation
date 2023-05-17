@@ -52,7 +52,7 @@ public class Main {
 
 
 
-    public static void main(String[] args) {//dsadasd
+    public static void main(String[] args) {
         Main main = new Main();
         main.create_a_forest();
 
@@ -105,16 +105,23 @@ public class Main {
         int iteracja = 0;
         outerLoop:
         while(true) {
-            for (int i = 0; i < Variables.beginnersList.size(); i++) {//sprawdza co jest wokół grzybiarzy od 1 do ostatniego!
-                Begginer_mushroom_picker.check_the_kind(Variables.beginnersList.get(i).position_x, Variables.beginnersList.get(i).position_y, i);
-                if(Variables.TOXIC_MUSH+Variables.NONTOXIC_MUSH == 0){
+            for (int i = 0,k = 0; i < Variables.beginnersList.size() || k < Variables.intermediateList.size(); i++ ,k++) {//sprawdza co jest wokół grzybiarzy od 1 do ostatniego!
+                if(i<Variables.beginnersList.size()) {
+                    Begginer_mushroom_picker.check_the_kind(Variables.beginnersList.get(i).position_x, Variables.beginnersList.get(i).position_y, i);
+                }
+                else if(k<Variables.intermediateList.size()) {
+                    Intermediate_mushroom_picker.check_the_kind(Variables.intermediateList.get(k).position_x, Variables.intermediateList.get(k).position_y, k);
+                }
+                if(Variables.TOXIC_MUSH + Variables.NONTOXIC_MUSH + Variables.HALLUCIN_MUSH == 0){
                     System.out.println("Symulacja zakonczona z powodu zebrania wszystkich grzybow toxic i nontoxic");
                     System.out.println("liczba iteracji: "+iteracja);
                     break outerLoop;
                 }
-                else if(Variables.beginnersList.size() == 0){
-                    System.out.println("Symulacja zakończona - wszyscy begginerzy zginęli");
+                else if(Variables.beginnersList.size() + Variables.intermediateList.size()  == 0){
+                    System.out.println("Symulacja zakończona - wszyscy zginęli");
                     System.out.println("liczba iteracji: "+iteracja);
+                    forest_print();
+                    System.out.println(Variables.intermediateList.size());
                     break outerLoop;
                 }
             }//nalezy rozpatrzec przypadek gdy ostatni begginer zbierze ostatniego grzyba wtedy jest koniec symulacji z jednocześnie 2 powodów
@@ -123,9 +130,12 @@ public class Main {
 
             for (int i = 0; i < Variables.beginnersList.size(); i++) {//random walk
                 Begginer_mushroom_picker.random_walk(Variables.beginnersList.get(i).position_x, Variables.beginnersList.get(i).position_y, "B");//sprawdzamy czy wokól postaci begginer nie ma czasem grzyba jadalnego którego może zebrac
-                Advanced_mushroom_picker.random_walk(Variables.advancedList.get(i).position_x, Variables.advancedList.get(i).position_y, "A");
+            }
+            for (int i = 0; i < Variables.intermediateList.size(); i++) {//random walk
                 Intermediate_mushroom_picker.random_walk(Variables.intermediateList.get(i).position_x, Variables.intermediateList.get(i).position_y, "I");
-
+            }
+            for (int i = 0; i < Variables.advancedList.size(); i++) {//random walk
+                Advanced_mushroom_picker.random_walk(Variables.advancedList.get(i).position_x, Variables.advancedList.get(i).position_y, "A");
             }
             System.out.println();
             forest_print();

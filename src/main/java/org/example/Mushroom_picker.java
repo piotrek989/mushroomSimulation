@@ -52,45 +52,24 @@ public abstract class Mushroom_picker {
 
         Random liczba = new Random();
 
-        int random_x = x -1 + liczba.nextInt(3);//ta linijka losuje od -1 do 1 i dodaje x
-        int random_y = y -1 + liczba.nextInt(3);//ta linijka losuje od -1 do 1 i dodaj y
-        if ((random_x >= 0) && (random_y >= 0) && (random_y < Variables.FOREST_WIDTH) && (random_x < Variables.FOREST_HEIGHT) && Variables.PLANSZA.get(random_x).get(random_y).equals("X")) {
-            Variables.PLANSZA.get(random_x).set(random_y, signOfPicker);//nowa pozycja beginnera
-            Variables.PLANSZA.get(x).set(y, "X");//stare pole staje się polem X
-            if(signOfPicker == "B") {//beginner
-                Begginer_mushroom_picker.change_position_after_random_walk(x, y, random_x, random_y);
-            }
-            else if(signOfPicker == "I") {//intermediate
-                Intermediate_mushroom_picker.change_position_after_random_walk(x, y, random_x, random_y);
-            }
-            else if(signOfPicker == "A") {//advanced
-                Advanced_mushroom_picker.change_position_after_random_walk(x, y, random_x, random_y);
-            }
-
-        }
-        else{
-            outerLoop:
-            for (int k = -1; k <= 1; k++) {
-                for (int p = -1; p <= 1; p++) {
-                    random_x = k + x;
-                    random_y = p + y;
-                    if ((random_x >= 0) && (random_y >= 0) && (random_y < Variables.FOREST_WIDTH) && (random_x < Variables.FOREST_HEIGHT) && (Variables.PLANSZA.get(random_x).get(random_y).equals("X"))) {
-                        Variables.PLANSZA.get(random_x).set(random_y, signOfPicker);
-                        Variables.PLANSZA.get(x).set(y, "X");//stare pole staje się polem X
-                        if(signOfPicker == "B") {//beginner
-                            Begginer_mushroom_picker.change_position_after_random_walk(x, y, random_x, random_y);
-                        }
-                        else if(signOfPicker == "I") {//intermediate
-                            Intermediate_mushroom_picker.change_position_after_random_walk(x, y, random_x, random_y);
-                        }
-                        else if(signOfPicker == "A") {//advanced
-                            Advanced_mushroom_picker.change_position_after_random_walk(x, y, random_x, random_y);
-                        }
-                        break outerLoop;//wychodzi z dwóch pętli for gdy to mozliwe
-                    }
+        int iteracja = 0;
+        do {
+            int random_x = x - 1 + liczba.nextInt(3);//ta linijka losuje od -1 do 1 i dodaje x
+            int random_y = y - 1 + liczba.nextInt(3);//ta linijka losuje od -1 do 1 i dodaj y
+            if ((random_x >= 0) && (random_y >= 0) && (random_y < Variables.FOREST_WIDTH) && (random_x < Variables.FOREST_HEIGHT) && Variables.PLANSZA.get(random_x).get(random_y).equals("X")) {
+                Variables.PLANSZA.get(random_x).set(random_y, signOfPicker);//nowa pozycja beginnera
+                Variables.PLANSZA.get(x).set(y, "X");//stare pole staje się polem X
+                if (signOfPicker.equals("B")) {//beginner
+                    Begginer_mushroom_picker.change_position_after_random_walk(x, y, random_x, random_y);
+                } else if (signOfPicker.equals("I")) {//intermediate
+                    Intermediate_mushroom_picker.change_position_after_random_walk(x, y, random_x, random_y);
+                } else if (signOfPicker.equals("A")) {//advanced
+                    Advanced_mushroom_picker.change_position_after_random_walk(x, y, random_x, random_y);
                 }
+            break;
             }
-        }
+            iteracja++;
+        }while(true && iteracja <= 10);//zakladamy że po 10 losowaniach nie ma pola takiego aby postawić tam postac i ona nie porusza sie
     }
 }
 
