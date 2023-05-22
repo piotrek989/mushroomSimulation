@@ -2,13 +2,13 @@ package org.example;
 import java.util.ArrayList;
 
 public class Variables {//co do rozmiarów lasu - potrzeba testów czy na pewno sie nie wywala, i przy jakim najwikszym rozmiarze są sensowne czasy realizacji symulacji
-    public static int FOREST_WIDTH = 20; // Szerokość lasu
+    public static int FOREST_WIDTH = 5; // Szerokość lasu
     public static int FOREST_HEIGHT = 5; // Wysokość lasu
     public static final int MUSHROOMS = 10;//liczba grzybkow to jest
-    public static final double PERCENT_OF_TOXIC = 20;
-    public static final double PERCENT_OF_HALLUCINATION = 80;
-    public static final int beginnerPickers = 0;
-    public static final int intermediatePickers = 3;
+    public static final double PERCENT_OF_TOXIC = 0;
+    public static final double PERCENT_OF_HALLUCINATION = 0;
+    public static final int beginnerPickers = 1;
+    public static final int intermediatePickers = 1;
     public static final int advancedPickers = 0;
     public static int NONTOXIC_MUSH = MUSHROOMS*(100-(int)PERCENT_OF_HALLUCINATION-(int) PERCENT_OF_TOXIC)/100;//liczba zdrowych grzybow
     public static int TOXIC_MUSH = Variables.MUSHROOMS*(int)Variables.PERCENT_OF_TOXIC/100;//liczba grzybow toxic
