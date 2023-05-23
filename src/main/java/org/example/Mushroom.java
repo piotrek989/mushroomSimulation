@@ -3,24 +3,24 @@ package org.example;
 import java.util.Random;
 
 public class Mushroom {
-    public int position_x;
-    public int position_y;
-    public Mushroom(int position_x, int position_y) {
-        this.position_x = position_x;
-        this.position_y = position_y;
+    public int positionX;
+    public int positionY;
+    public Mushroom(int positionX, int positionY) {
+        this.positionX = positionX;
+        this.positionY = positionY;
     }
-    public static int[] fulfillment_with_mushrooms(String signOfMushroom) {//to wypelnia ale tylko grzybami
+    public static int[] fulfillmentWithMushrooms(String signOfMushroom) {//to wypełnia, ale tylko grzybami
         int[] returnedArrayOfMushroom = new int[2];
         Random number = new Random();
-        int random_x = number.nextInt(Variables.FOREST_HEIGHT);
-        int random_y = number.nextInt(Variables.FOREST_WIDTH);
-        while (!Variables.BOARD.get(random_x).get(random_y).equals("X")) {
-            random_x = number.nextInt(Variables.FOREST_HEIGHT);//losuje do skutku czyli trafienia na wylosowane pole X na które można postawic grzyba
-            random_y = number.nextInt(Variables.FOREST_WIDTH);
+        int randomX = number.nextInt(Variables.forestHeight);
+        int randomY = number.nextInt(Variables.forestWidth);
+        while (!Variables.board.get(randomX).get(randomY).equals("X")) {
+            randomX = number.nextInt(Variables.forestHeight);//losuje do skutku, czyli trafienia na wylosowane pole X, na które można postawić grzyba
+            randomY = number.nextInt(Variables.forestWidth);
         }
-        Variables.BOARD.get(random_x).set(random_y, signOfMushroom);//ustawienie grzyba toxic
-        returnedArrayOfMushroom[0] = random_x;
-        returnedArrayOfMushroom[1] = random_y;
+        Variables.board.get(randomX).set(randomY, signOfMushroom);//ustawienie grzyba toxic
+        returnedArrayOfMushroom[0] = randomX;
+        returnedArrayOfMushroom[1] = randomY;
         return returnedArrayOfMushroom;
     }
 
