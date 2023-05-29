@@ -20,7 +20,7 @@ public class Main {
     public static final String WHITE = "\u001B[37m";
     public static void forestPrint() {//printowanie lasu
         for (int i = 0; i < Variables.forestHeight; i++) {
-            for (int j = 0; j < Variables.forestWidth; j++) {
+            for (int j = 0; j < Variables.getForestWidth(); j++) {
                 if (Variables.board.get(i).get(j).equals("X")) { //puste pole
                     System.out.print(WHITE + Variables.board.get(i).get(j) + RESET);
                 } else if(Variables.board.get(i).get(j).equals("P")){ //grzyb trujący
@@ -49,7 +49,7 @@ public class Main {
     public static void createForest(){//wypelnia X-ami planszę
         for (int i = 0; i < Variables.forestHeight; i++) {
             ArrayList<String> row = new ArrayList<String>();
-            for (int j = 0; j < Variables.forestWidth; j++) {
+            for (int j = 0; j < Variables.getForestWidth(); j++) {
                 row.add("X");//cała plansza wypelniona X-ami
             }
             Variables.board.add(row);
@@ -62,18 +62,19 @@ public class Main {
 
     public static void main(String[] args) {
         //if sprawdza poprawność zadanych wartości (tak żeby wszystko zmieściło się na planszy)
-        if (Variables.forestWidth > 0 && Variables.forestWidth <= 100
+        if (Variables.getForestWidth() > 0 && Variables.getForestWidth() <= 100
                 && Variables.forestHeight > 0 && Variables.forestHeight <=100
                 && Variables.percentOfToxic <= 100 && Variables.percentOfToxic >= 0
                 && Variables.percentOfHallucination <= 100 && Variables.percentOfHallucination >= 0
                 && Variables.mushrooms > 0
-                && Variables.mushrooms <= Variables.forestWidth * Variables.forestHeight - 1
+                && Variables.mushrooms <= Variables.getForestWidth() * Variables.forestHeight - 1
                 && Variables.beginnerPickers >= 0
-                && Variables.beginnerPickers <= Variables.forestWidth * Variables.forestHeight - Variables.mushrooms
+                && Variables.beginnerPickers <= Variables.getForestWidth() * Variables.forestHeight - Variables.mushrooms
                 && Variables.advancedPickers >= 0
-                && Variables.advancedPickers <= Variables.forestWidth * Variables.forestHeight - Variables.mushrooms - Variables.beginnerPickers
+                && Variables.advancedPickers <= Variables.getForestWidth() * Variables.forestHeight - Variables.mushrooms - Variables.beginnerPickers
                 && Variables.intermediatePickers >= 0
-                && Variables.intermediatePickers <= Variables.forestWidth * Variables.forestHeight - Variables.mushrooms - Variables.beginnerPickers - Variables.advancedPickers) {
+                && Variables.intermediatePickers <= Variables.getForestWidth() * Variables.forestHeight - Variables.mushrooms - Variables.beginnerPickers - Variables.advancedPickers
+                && Variables.percentOfHallucination + Variables.percentOfToxic <= 100) {//nie może byc wiecej niż 100% grzybow
             Main main = new Main();
             main.createForest();
 
@@ -128,13 +129,16 @@ public class Main {
             while (true) {
                 for (int i = 0, k = 0, m = 0; m < Variables.advancedList.size() || i < Variables.beginnersList.size() || k < Variables.intermediateList.size(); i++, k++, m++) {//sprawdza co jest wokół grzybiarzy od 1 do ostatniego!
                     if (i < Variables.beginnersList.size()) {//musimy sprawdzać ten warunek
-                        BeginnerMushroomPicker.checkTheKind(Variables.beginnersList.get(i).positionX, Variables.beginnersList.get(i).positionY, i);
+                        int n = BeginnerMushroomPicker.checkTheKind(Variables.beginnersList.get(i).getPositionX(), Variables.beginnersList.get(i).getPositionY(), i);//metoda zwraca 0 gdy begginer nie ginie i -1 gdy ginie
+                        i = i + n;
                     }
                     if (k < Variables.intermediateList.size()) {//musimy sprawdzać ten warunek
-                        IntermediateMushroomPicker.checkTheKind(Variables.intermediateList.get(k).positionX, Variables.intermediateList.get(k).positionY, k);
+                        int n = IntermediateMushroomPicker.checkTheKind(Variables.intermediateList.get(k).getPositionX(), Variables.intermediateList.get(k).getPositionY(), k);//metoda zwraca 0 gdy intermediate nie ginie i -1 gdy ginie
+                        k = k + n;
                     }
                     if (m < Variables.advancedList.size()) {//musimy sprawdzać ten warunek
-                        AdvancedMushroomPicker.checkTheKind(Variables.advancedList.get(m).positionX, Variables.advancedList.get(m).positionY, m);
+                        int n = AdvancedMushroomPicker.checkTheKind(Variables.advancedList.get(m).getPositionX(), Variables.advancedList.get(m).getPositionY(), m);//metoda zwraca 0 gdy advanced nie ginie i -1 gdy ginie
+                        m = m + n;
                     }
                     //sytuacja, w której nie ma już grzybów
                     if (Variables.toxicMush + Variables.nontoxicMush + Variables.hallucinationMush == 0) {
@@ -166,13 +170,13 @@ public class Main {
                 forestPrint();
 
                 for (int n = 0; n < Variables.beginnersList.size(); n++) {//random walk
-                    BeginnerMushroomPicker.randomWalk(Variables.beginnersList.get(n).positionX, Variables.beginnersList.get(n).positionY, "B");//sprawdzamy czy wokól postaci begginer nie ma czasem grzyba jadalnego którego może zebrac
+                    BeginnerMushroomPicker.randomWalk(Variables.beginnersList.get(n).getPositionX(), Variables.beginnersList.get(n).getPositionY(), "B");//sprawdzamy czy wokól postaci begginer nie ma czasem grzyba jadalnego którego może zebrac
                 }
                 for (int u = 0; u < Variables.intermediateList.size(); u++) {//random walk
-                    IntermediateMushroomPicker.randomWalk(Variables.intermediateList.get(u).positionX, Variables.intermediateList.get(u).positionY, "I");
+                    IntermediateMushroomPicker.randomWalk(Variables.intermediateList.get(u).getPositionX(), Variables.intermediateList.get(u).getPositionY(), "I");
                 }
                 for (int l = 0; l < Variables.advancedList.size(); l++) {//random walk
-                    AdvancedMushroomPicker.randomWalk(Variables.advancedList.get(l).positionX, Variables.advancedList.get(l).positionY, "A");
+                    AdvancedMushroomPicker.randomWalk(Variables.advancedList.get(l).getPositionX(), Variables.advancedList.get(l).getPositionY(), "A");
                 }
                 System.out.println();
                 forestPrint();
@@ -185,6 +189,7 @@ public class Main {
             if(Variables.dead == 1) {
                 System.out.println("Zginal " + Variables.dead + " grzybiarz");
             } else System.out.println("Zginelo " + Variables.dead + " grzybiarzy");
-        }else System.out.println("podano zle parametry");
+        }
+        else System.out.println("podano zle parametry");
     }
 }

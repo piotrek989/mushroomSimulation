@@ -2,8 +2,8 @@ package org.example;
 import java.util.ArrayList;
 
 public class Variables {
-    public static int forestWidth = 10; //szerokość lasu
-    public static int forestHeight = 5; //wysokość lasu
+    private static final int forestWidth = 20; //szerokość lasu
+    public static final int forestHeight = 8; //wysokość lasu
     public static final int mushrooms = 10;//liczba wszystkich grzybów
     public static final double percentOfToxic = 100;//procent grzybów toksycznych
     public static final double percentOfHallucination = 0;//procent grzybów halucynków
@@ -21,4 +21,9 @@ public class Variables {
     public static ArrayList<ToxicMushroom>  toxicMushroomList= new ArrayList<>();//przechowuje grzyby toxic
     public static ArrayList<HallucinationMushroom> hallucinationMushroomList = new ArrayList<>();//przechowuje grzyby hallucination
     public static int dead = 0;//będzie zliczać ilość umarłych grzybiarzy
+
+
+    public static int getForestWidth() {
+        return forestWidth;
+    }
 }
