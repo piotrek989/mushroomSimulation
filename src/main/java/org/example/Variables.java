@@ -2,13 +2,13 @@ package org.example;
 import java.util.ArrayList;
 
 public class Variables {
-    private static final int forestWidth = 20; //szerokość lasu
-    public static final int forestHeight = 8; //wysokość lasu
-    public static final int mushrooms = 10;//liczba wszystkich grzybów
-    public static final double percentOfToxic = 100;//procent grzybów toksycznych
-    public static final double percentOfHallucination = 0;//procent grzybów halucynków
-    public static final int beginnerPickers = 5;//liczba beginnerów
-    public static final int intermediatePickers = 0;//liczba intermediate
+    private static final int forestWidth = 5; //szerokość lasu
+    public static final int forestHeight = 5; //wysokość lasu
+    public static final int mushrooms = 5;//liczba wszystkich grzybów
+    public static final double percentOfToxic = 50;//procent grzybów toksycznych
+    public static final double percentOfHallucination = 20;//procent grzybów halucynków
+    public static final int beginnerPickers = 1;//liczba beginnerów
+    public static final int intermediatePickers = 3;//liczba intermediate
     public static final int advancedPickers = 0;//liczba advanced
     public static int nontoxicMush = mushrooms *(100-(int) percentOfHallucination -(int) percentOfToxic)/100;//liczba zdrowych grzybów
     public static int toxicMush = Variables.mushrooms *(int)Variables.percentOfToxic /100;//liczba grzybów toxic

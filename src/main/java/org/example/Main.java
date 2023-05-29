@@ -58,15 +58,24 @@ public class Main {
 
 
 
-
-
     public static void main(String[] args) {
+
+       if (args.length < 2) {
+            System.out.println("Nie podano wystarczającej liczby argumentów.");
+            System.out.println("Użycie: java Main <interacje> <szerokosc> ");
+            return;
+        }
+        int param1 = Integer.parseInt(args[0]);
+        int param2 = Integer.parseInt(args[1]);
+
         //if sprawdza poprawność zadanych wartości (tak żeby wszystko zmieściło się na planszy)
+
+        int iteraction = 0;
         if (Variables.getForestWidth() > 0 && Variables.getForestWidth() <= 100
                 && Variables.forestHeight > 0 && Variables.forestHeight <=100
                 && Variables.percentOfToxic <= 100 && Variables.percentOfToxic >= 0
                 && Variables.percentOfHallucination <= 100 && Variables.percentOfHallucination >= 0
-                && Variables.mushrooms > 0
+                && Variables.mushrooms > 0//grzybow musi byc minimum 1
                 && Variables.mushrooms <= Variables.getForestWidth() * Variables.forestHeight - 1
                 && Variables.beginnerPickers >= 0
                 && Variables.beginnerPickers <= Variables.getForestWidth() * Variables.forestHeight - Variables.mushrooms
@@ -74,6 +83,7 @@ public class Main {
                 && Variables.advancedPickers <= Variables.getForestWidth() * Variables.forestHeight - Variables.mushrooms - Variables.beginnerPickers
                 && Variables.intermediatePickers >= 0
                 && Variables.intermediatePickers <= Variables.getForestWidth() * Variables.forestHeight - Variables.mushrooms - Variables.beginnerPickers - Variables.advancedPickers
+                && Variables.intermediatePickers + Variables.advancedPickers + Variables.beginnerPickers > 0//nie może nie byc grzybiarzy - symulacje bez sensu
                 && Variables.percentOfHallucination + Variables.percentOfToxic <= 100) {//nie może byc wiecej niż 100% grzybow
             Main main = new Main();
             main.createForest();
@@ -104,27 +114,26 @@ public class Main {
                 int[] coordinatesOfBegginer = BeginnerMushroomPicker.checkAndGiveFirstPosition("B");
                 int coordinateX = coordinatesOfBegginer[0];//x
                 int coordinateY = coordinatesOfBegginer[1];//y
-                BeginnerMushroomPicker begginer = new BeginnerMushroomPicker(1, coordinateX, coordinateY);//firelement to x, secelement to y
+                BeginnerMushroomPicker begginer = new BeginnerMushroomPicker(0, coordinateX, coordinateY);//firelement to x, secelement to y
                 Variables.beginnersList.add(begginer);
             }
             for (int i = 0; i < Variables.advancedPickers; i++) {//dopisywanie advanced do planszy
                 int[] coordinatesOfAdvanced = AdvancedMushroomPicker.checkAndGiveFirstPosition("A");
                 int coordinateX = coordinatesOfAdvanced[0];//x
                 int coordinateY = coordinatesOfAdvanced[1];//y
-                AdvancedMushroomPicker advanced = new AdvancedMushroomPicker(1, coordinateX, coordinateY);//firelement to x, secelement to y
+                AdvancedMushroomPicker advanced = new AdvancedMushroomPicker(0, coordinateX, coordinateY);//firelement to x, secelement to y
                 Variables.advancedList.add(advanced);
             }
             for (int i = 0; i < Variables.intermediatePickers; i++) {//dopisywanie intermediate do planszy
                 int[] coordinatesOfIntermediate = AdvancedMushroomPicker.checkAndGiveFirstPosition("I");
                 int coordinateX = coordinatesOfIntermediate[0];//x
                 int coordinateY = coordinatesOfIntermediate[1];//y
-                IntermediateMushroomPicker intermediate = new IntermediateMushroomPicker(1, coordinateX, coordinateY);//firelement to x, secelement to y
+                IntermediateMushroomPicker intermediate = new IntermediateMushroomPicker(0, coordinateX, coordinateY);//firelement to x, secelement to y
                 Variables.intermediateList.add(intermediate);
             }
             forestPrint();
 
 
-            int iteraction = 0;
             outerLoop:
             while (true) {
                 for (int i = 0, k = 0, m = 0; m < Variables.advancedList.size() || i < Variables.beginnersList.size() || k < Variables.intermediateList.size(); i++, k++, m++) {//sprawdza co jest wokół grzybiarzy od 1 do ostatniego!
@@ -143,25 +152,21 @@ public class Main {
                     //sytuacja, w której nie ma już grzybów
                     if (Variables.toxicMush + Variables.nontoxicMush + Variables.hallucinationMush == 0) {
                         System.out.println("Symulacja zakonczona - wszystkie grzyby zostaly zebrane");
-                        System.out.println("liczba iteracji: " + iteraction);
                         break outerLoop;
                         //sytuacja, w której nie ma już grzybiarzy
                     } else if (Variables.beginnersList.size() + Variables.intermediateList.size() + Variables.advancedList.size() == 0) {
                         System.out.println("Symulacja zakonczona - wszyscy zgineli");
-                        System.out.println("liczba iteracji: " + iteraction);
                         forestPrint();
                         System.out.println(Variables.intermediateList.size());
                         break outerLoop;
                         //sytuacja, w której zostali sami advanced i grzyby toxic
                     } else if (Variables.beginnersList.size() + Variables.intermediateList.size() == 0 && Variables.nontoxicMush + Variables.hallucinationMush == 0) {
                         System.out.println("Symulacja zakonczona - zostali tylko grzybiarze zaawansowani i trujace grzyby");
-                        System.out.println("liczba iteracji: " + iteraction);
                         forestPrint();
                         break outerLoop;
                         //sytuacja, w której zostali sami beginnerzy i halucynki
                     } else if (Variables.intermediateList.size() + Variables.advancedList.size() == 0 && Variables.nontoxicMush + Variables.toxicMush == 0) {
                         System.out.println("Symulacja zakonczona - zostali tylko grzybiarze poczatkujacy i grzyby halucynki");
-                        System.out.println("liczba iteracji: " + iteraction);
                         forestPrint();
                         break outerLoop;
                     }
@@ -180,16 +185,27 @@ public class Main {
                 }
                 System.out.println();
                 forestPrint();
-                System.out.println("Po random walk");
                 iteraction++;
 
             }
             //wypisanie wyników po skończonej symulacji
             System.out.println("---------- Podsumowanie symulacji ----------");
-            if(Variables.dead == 1) {
+            if (Variables.dead == 1) {
                 System.out.println("Zginal " + Variables.dead + " grzybiarz");
-            } else System.out.println("Zginelo " + Variables.dead + " grzybiarzy");
+                System.out.println("Liczba iteracji: " + iteraction);
+            }
+            else {
+                System.out.println("Zginelo " + Variables.dead + " grzybiarzy");
+                System.out.println("Liczba iteracji: " + iteraction);
+            }
+
         }
         else System.out.println("podano zle parametry");
+
+        System.out.println("Przykładowe parametry wejściowe:");
+        System.out.println("iteracje: " + param1);
+        System.out.println("szerokosc: " + param2);
+
+
     }
 }

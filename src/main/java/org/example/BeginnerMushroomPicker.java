@@ -42,7 +42,11 @@ public class BeginnerMushroomPicker extends MushroomPicker {
                 if (aroundX >= 0 && aroundY >= 0 && aroundX < Variables.forestHeight && aroundY < Variables.getForestWidth()){
                     if(Variables.board.get(aroundX).get(aroundY).equals("H")){
                         //DZIEDZICZENIE
+                        int temp = Variables.nontoxicMush;
                         interactionWithNontoxic(aroundX, aroundY);//check if nontoxic jest dziedziczone po mushroompickers
+                        if(temp - Variables.nontoxicMush == 1){//okazalo sie ze begginer wziol grzyba nontoxic
+                            Variables.beginnersList.get(indexOfBeginner).setScore(Variables.beginnersList.get(indexOfBeginner).getScore() + 1);
+                        }
                         return 0;//zwracamy 0 gdy jest interakcja z nontoxic - nie zmniejsza się ilosc begginerów
                     }
                     else if(Variables.board.get(aroundX).get(aroundY).equals("P")) {//P to są toxic grzyby

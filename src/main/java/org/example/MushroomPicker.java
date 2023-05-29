@@ -26,6 +26,12 @@ public abstract class MushroomPicker {
     public void setPositionY(int positionY) {
         this.positionY = positionY;
     }
+    public int getScore() {//getter
+        return score;
+    }
+    public void setScore(int score) {//getter
+        this.score = score;
+    }
 
     public static int [] checkAndGiveFirstPosition(String signOfPicker){
         //szukanie pozycji dla grzybiarza
@@ -57,6 +63,7 @@ public abstract class MushroomPicker {
                 Variables.board.get(aroundX).set(aroundY, "X");//ustawienie na planszy, że grzyb healthy jest zjedzony
                 Variables.nontoxicMushroomList.remove(k);//usunięcie grzyba healthy z arraylisty bo został zjedzony
                 Variables.nontoxicMush--;
+
                 break;
             }
         }

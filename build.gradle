@@ -13,13 +13,17 @@ repositories {
 application{
     mainClass = "org.example.Main"
 }
-
-run{
-    doFirst{
-        //println "uruchamianie"
-    }
+task runBashScript(type: Exec) {
+    commandLine 'C:\\Program Files\\Git\\bin\\sh.exe', 'src/main/java/org/example/runForest.sh'
+    //workingDir 'C:\\Users\\piotr\\IdeaProjects\\GrzybobranieV3' // Katalog główny projektu
+    //commandLine 'sh', 'src/main/java/org.example/runForest.sh' // Ścieżka do pliku skryptu Bash
 }
 
+run {
+    doFirst {
+
+    }
+}
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
