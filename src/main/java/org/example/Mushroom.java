@@ -26,13 +26,13 @@ public class Mushroom {
     public static int[] fulfillmentWithMushrooms(String signOfMushroom) {//to wypełnia, ale tylko grzybami
         int[] returnedArrayOfMushroom = new int[2];
         Random number = new Random();
-        int randomX = number.nextInt(Variables.forestHeight);
-        int randomY = number.nextInt(Variables.getForestWidth());
-        while (!Variables.board.get(randomX).get(randomY).equals("X")) {
-            randomX = number.nextInt(Variables.forestHeight);//losuje do skutku, czyli trafienia na wylosowane pole X, na które można postawić grzyba
-            randomY = number.nextInt(Variables.getForestWidth());
+        int randomX = number.nextInt(Forest.forestHeight);
+        int randomY = number.nextInt(Forest.getForestWidth());
+        while (!Forest.board.get(randomX).get(randomY).equals("X")) {
+            randomX = number.nextInt(Forest.forestHeight);//losuje do skutku, czyli trafienia na wylosowane pole X, na które można postawić grzyba
+            randomY = number.nextInt(Forest.getForestWidth());
         }
-        Variables.board.get(randomX).set(randomY, signOfMushroom);//ustawienie grzyba toxic
+        Forest.board.get(randomX).set(randomY, signOfMushroom);//ustawienie grzyba toxic
         returnedArrayOfMushroom[0] = randomX;
         returnedArrayOfMushroom[1] = randomY;
         return returnedArrayOfMushroom;
