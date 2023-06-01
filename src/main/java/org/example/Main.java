@@ -1,6 +1,8 @@
 package org.example;
 
 //do zrobienia jeszcze:
+//-wypisanie kto zebrał ile grzybów
+//-ostatnia uwaga w mailu
 //-wizualizacja symulacji
 
 public class Main {
@@ -25,7 +27,7 @@ public class Main {
                 && Forest.mushrooms <= 0//grzybów musi byc minimum 1
                 && Forest.mushrooms > Forest.getForestWidth() * Forest.forestHeight - 1
                 && Forest.percentOfHallucination + Forest.percentOfToxic > 100) {//nie może byc wiecej niż 100% grzybów
-            System.out.println("wpisan zle parametry grzybow");
+            System.out.println("wpisano zle parametry grzybow");
         } else if (Forest.beginnerPickers < 0
                 && Forest.beginnerPickers > Forest.getForestWidth() * Forest.forestHeight - Forest.mushrooms
                 && Forest.advancedPickers < 0
@@ -39,21 +41,21 @@ public class Main {
             Forest.createForest();
 
             for (int i = 0; i < Forest.nontoxicMush; i++) {//dopisywanie nowych (healthy) grzybów do planszy
-                int[] coordinatesOfNontoxic = NontoxicMushroom.fulfillmentWithMushrooms("H");//nontoxic
+                int[] coordinatesOfNontoxic = NontoxicMushroom.fulfillmentWithMushrooms(Forest.H);//nontoxic
                 int coordinateX = coordinatesOfNontoxic[0];//x
                 int coordinateY = coordinatesOfNontoxic[1];//y
                 NontoxicMushroom nontoxic = new NontoxicMushroom(coordinateX, coordinateY);//firstelement to x, secondelement to y
                 Forest.nontoxicMushroomList.add(nontoxic);
             }
             for (int i = 0; i < Forest.toxicMush; i++) {//dopisywanie nowych (toxic) grzybów do planszy
-                int[] coordinatesOfToxic = ToxicMushroom.fulfillmentWithMushrooms("P");//toxic
+                int[] coordinatesOfToxic = ToxicMushroom.fulfillmentWithMushrooms(Forest.P);//toxic
                 int coordinateX = coordinatesOfToxic[0];//x
                 int coordinateY = coordinatesOfToxic[1];//y
                 ToxicMushroom toxic = new ToxicMushroom(coordinateX, coordinateY);//firstelement to x, secondelement to y
                 Forest.toxicMushroomList.add(toxic);
             }
             for (int i = 0; i < Forest.hallucinationMush; i++) {//dopisywanie nowych (hallucination) grzybów do planszy
-                int[] coordinatesOfHallucination = HallucinationMushroom.fulfillmentWithMushrooms("L");//hallucination
+                int[] coordinatesOfHallucination = HallucinationMushroom.fulfillmentWithMushrooms(Forest.L);//hallucination
                 int coordinateX = coordinatesOfHallucination[0];//x
                 int coordinateY = coordinatesOfHallucination[1];//y
                 HallucinationMushroom hallucination = new HallucinationMushroom(coordinateX, coordinateY);//firstelement to x, secondelement to y
@@ -61,21 +63,21 @@ public class Main {
             }
 
             for (int i = 0; i < Forest.beginnerPickers; i++) {//dopisywanie begginerów do planszy
-                int[] coordinatesOfBegginer = BeginnerMushroomPicker.checkAndGiveFirstPosition("B");
+                int[] coordinatesOfBegginer = BeginnerMushroomPicker.checkAndGiveFirstPosition(Forest.B);
                 int coordinateX = coordinatesOfBegginer[0];//x
                 int coordinateY = coordinatesOfBegginer[1];//y
                 BeginnerMushroomPicker begginer = new BeginnerMushroomPicker(0, coordinateX, coordinateY);//firelement to x, secelement to y
                 Forest.beginnersList.add(begginer);
             }
             for (int i = 0; i < Forest.advancedPickers; i++) {//dopisywanie advanced do planszy
-                int[] coordinatesOfAdvanced = AdvancedMushroomPicker.checkAndGiveFirstPosition("A");
+                int[] coordinatesOfAdvanced = AdvancedMushroomPicker.checkAndGiveFirstPosition(Forest.A);
                 int coordinateX = coordinatesOfAdvanced[0];//x
                 int coordinateY = coordinatesOfAdvanced[1];//y
                 AdvancedMushroomPicker advanced = new AdvancedMushroomPicker(0, coordinateX, coordinateY);//firelement to x, secelement to y
                 Forest.advancedList.add(advanced);
             }
             for (int i = 0; i < Forest.intermediatePickers; i++) {//dopisywanie intermediate do planszy
-                int[] coordinatesOfIntermediate = AdvancedMushroomPicker.checkAndGiveFirstPosition("I");
+                int[] coordinatesOfIntermediate = AdvancedMushroomPicker.checkAndGiveFirstPosition(Forest.I);
                 int coordinateX = coordinatesOfIntermediate[0];//x
                 int coordinateY = coordinatesOfIntermediate[1];//y
                 IntermediateMushroomPicker intermediate = new IntermediateMushroomPicker(0, coordinateX, coordinateY);//firelement to x, secelement to y
@@ -125,13 +127,13 @@ public class Main {
                 Forest.forestPrint();
 
                 for (int n = 0; n < Forest.beginnersList.size(); n++) {//random walk
-                    BeginnerMushroomPicker.randomWalk(Forest.beginnersList.get(n).getPositionX(), Forest.beginnersList.get(n).getPositionY(), "B");//sprawdzamy czy wokól postaci begginer nie ma czasem grzyba jadalnego którego może zebrac
+                    BeginnerMushroomPicker.randomWalk(Forest.beginnersList.get(n).getPositionX(), Forest.beginnersList.get(n).getPositionY(), Forest.B);//sprawdzamy czy wokól postaci begginer nie ma czasem grzyba jadalnego którego może zebrac
                 }
                 for (int u = 0; u < Forest.intermediateList.size(); u++) {//random walk
-                    IntermediateMushroomPicker.randomWalk(Forest.intermediateList.get(u).getPositionX(), Forest.intermediateList.get(u).getPositionY(), "I");
+                    IntermediateMushroomPicker.randomWalk(Forest.intermediateList.get(u).getPositionX(), Forest.intermediateList.get(u).getPositionY(), Forest.I);
                 }
                 for (int l = 0; l < Forest.advancedList.size(); l++) {//random walk
-                    AdvancedMushroomPicker.randomWalk(Forest.advancedList.get(l).getPositionX(), Forest.advancedList.get(l).getPositionY(), "A");
+                    AdvancedMushroomPicker.randomWalk(Forest.advancedList.get(l).getPositionX(), Forest.advancedList.get(l).getPositionY(), Forest.A);
                 }
                 System.out.println();
                 Forest.forestPrint();

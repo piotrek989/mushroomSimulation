@@ -28,7 +28,7 @@ public class Mushroom {
         Random number = new Random();
         int randomX = number.nextInt(Forest.forestHeight);
         int randomY = number.nextInt(Forest.getForestWidth());
-        while (!Forest.board.get(randomX).get(randomY).equals("X")) {
+        while (!Forest.board.get(randomX).get(randomY).equals(Forest.X)) {
             randomX = number.nextInt(Forest.forestHeight);//losuje do skutku, czyli trafienia na wylosowane pole X, na które można postawić grzyba
             randomY = number.nextInt(Forest.getForestWidth());
         }

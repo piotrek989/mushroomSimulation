@@ -36,11 +36,11 @@ public class AdvancedMushroomPicker extends MushroomPicker {
                     aroundX = x + i;//tutaj mamy pozycję x wokół postaci
                     aroundY = y + j;//tutaj mamy pozycję y wokół postaci
                     if (aroundX >= 0 && aroundY >= 0 && aroundX < Forest.forestHeight && aroundY < Forest.getForestWidth()) {
-                        if (Forest.board.get(aroundX).get(aroundY).equals("H")) {
+                        if (Forest.board.get(aroundX).get(aroundY).equals(Forest.H)) {
                             //DZIEDZICZENIE
                             interactionWithNontoxic(aroundX, aroundY);//check if nontoxic jest dziedziczone po mushroompickers
                             return 0;//zwraca 0 bo nic sie nie dzieje
-                        } else if (Forest.board.get(aroundX).get(aroundY).equals("L")) {//L to są grzyby halucynki
+                        } else if (Forest.board.get(aroundX).get(aroundY).equals(Forest.L)) {//L to są grzyby halucynki
                             interactionWithHallucination(x, y, aroundX, aroundY, indexOfAdvanced);
                             return -1;//zwraca -1 bo ginie
                         }

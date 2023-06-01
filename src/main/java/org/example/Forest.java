@@ -45,26 +45,7 @@ public class Forest {
     public static void forestPrint() {//printowanie lasu
         for (int i = 0; i < Forest.forestHeight; i++) {
             for (int j = 0; j < Forest.getForestWidth(); j++) {
-                if (board.get(i).get(j).equals("X")) { //puste pole
-                    System.out.print(X);
-                } else if(board.get(i).get(j).equals("P")){ //grzyb trujący
-                    System.out.print(P);
-                }
-                else if(board.get(i).get(j).equals("H")){ //grzyb jadalny
-                    System.out.print(H);
-                }
-                else if(board.get(i).get(j).equals("L")){ //grzyb halucynek
-                    System.out.print(L);
-                }
-                else if(board.get(i).get(j).equals("B")){ //beginner
-                    System.out.print(B);
-                }
-                else if(board.get(i).get(j).equals("A")){ //advanced
-                    System.out.print(A);
-                }
-                else if(board.get(i).get(j).equals("I")){ //intermediate
-                    System.out.print(I);
-                }
+                System.out.print(board.get(i).get(j));
             }
             System.out.println();
         }
@@ -74,7 +55,7 @@ public class Forest {
         for (int i = 0; i < Forest.forestHeight; i++) {
             ArrayList<String> row = new ArrayList<String>();
             for (int j = 0; j < Forest.getForestWidth(); j++) {
-                row.add("X");//cała plansza wypelniona X-ami
+                row.add(X);//cała plansza wypelniona X-ami
             }
             Forest.board.add(row);
         }

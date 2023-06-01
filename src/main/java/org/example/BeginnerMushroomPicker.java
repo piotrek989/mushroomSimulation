@@ -21,8 +21,8 @@ public class BeginnerMushroomPicker extends MushroomPicker {
     private static void interactionWithToxic(int x, int y, int aroundX, int aroundY, int indexOfBeginner){
         for(int k = 0; k < Forest.toxicMushroomList.size() ; k++){//skanujemy po całej liście grzybow toxic i czekamy aż pętla natrafi na takowego
             if(Forest.toxicMushroomList.get(k).getPositionX() == aroundX && Forest.toxicMushroomList.get(k).getPositionY() == aroundY){
-                Forest.board.get(aroundX).set(aroundY, "X");//ustawienie na planszy, że grzyb toxic jest zjedzony
-                Forest.board.get(x).set(y, "X");//ustawienie na planszy, że beginner zginął
+                Forest.board.get(aroundX).set(aroundY, Forest.X);//ustawienie na planszy, że grzyb toxic jest zjedzony
+                Forest.board.get(x).set(y, Forest.X);//ustawienie na planszy, że beginner zginął
                 Forest.toxicMushroomList.remove(k);//usunięcie grzyba toxic z arraylisty bo został zjedzony
                 Forest.toxicMush--;
                 Forest.beginnersList.remove(indexOfBeginner);//usunięcie beginnera z listy bo zginął
@@ -40,7 +40,7 @@ public class BeginnerMushroomPicker extends MushroomPicker {
                 aroundX = x + i;//tutaj mamy pozycję x wokół postaci
                 aroundY = y + j;//tutaj mamy pozycję y wokół postaci
                 if (aroundX >= 0 && aroundY >= 0 && aroundX < Forest.forestHeight && aroundY < Forest.getForestWidth()){
-                    if(Forest.board.get(aroundX).get(aroundY).equals("H")){
+                    if(Forest.board.get(aroundX).get(aroundY).equals(Forest.H)){
                         //DZIEDZICZENIE
                         int temp = Forest.nontoxicMush;
                         interactionWithNontoxic(aroundX, aroundY);//check if nontoxic jest dziedziczone po mushroompickers
@@ -49,7 +49,7 @@ public class BeginnerMushroomPicker extends MushroomPicker {
                         }
                         return 0;//zwracamy 0 gdy jest interakcja z nontoxic - nie zmniejsza się ilosc begginerów
                     }
-                    else if(Forest.board.get(aroundX).get(aroundY).equals("P")) {//P to są toxic grzyby
+                    else if(Forest.board.get(aroundX).get(aroundY).equals(Forest.P)) {//P to są toxic grzyby
                         interactionWithToxic(x, y, aroundX, aroundY, indexOfBeginner);
                         return -1;//zwracamy -1 gdy jest innterakcja z toxic - ginie begginer
                     }
