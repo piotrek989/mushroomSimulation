@@ -10,19 +10,19 @@ public class AdvancedMushroomPicker extends MushroomPicker {
             if (Forest.advancedList.get(i).getPositionX() == x && Forest.advancedList.get(i).getPositionY() == y) {
                 Forest.advancedList.get(i).setPositionX(randomX);
                 Forest.advancedList.get(i).setPositionY(randomY);
-                break;//wychodzimy bo już znaleźliśmy
+                break;//wychodzimy, bo już znaleźliśmy
             }
         }
     }
     private static void interactionWithHallucination(int x, int y, int aroundX, int aroundY, int indexOfAdvanced)
     {
-        for(int k = 0; k < Forest.hallucinationMushroomList.size() ; k++){//skanujemy po całej liście grzybów halucynków i czekamy aż pętla natrafi na takowego
+        for(int k = 0; k < Forest.hallucinationMushroomList.size() ; k++){//skanujemy po całej liście grzybów halucynków i czekamy, aż pętla natrafi na takowego
             if(Forest.hallucinationMushroomList.get(k).getPositionX() == aroundX && Forest.hallucinationMushroomList.get(k).getPositionY() == aroundY){
                 Forest.board.get(aroundX).set(aroundY, "X");//ustawienie na planszy, że grzyb hallucination jest zjedzony
                 Forest.board.get(x).set(y, "X");//ustawienie na planszy, że advanced zginął
-                Forest.hallucinationMushroomList.remove(k);//usunięcie grzyba halucynka z arraylisty bo został zjedzony
+                Forest.hallucinationMushroomList.remove(k);//usunięcie grzyba halucynka z arraylisty, bo został zjedzony
                 Forest.hallucinationMush--;
-                Forest.advancedList.remove(indexOfAdvanced);//usunięcie advanced z listy bo zginął
+                Forest.advancedList.remove(indexOfAdvanced);//usunięcie advanced z listy, bo zginął
                 Forest.dead++;//zliczanie umarłych
                 break;
             }
@@ -38,15 +38,19 @@ public class AdvancedMushroomPicker extends MushroomPicker {
                     if (aroundX >= 0 && aroundY >= 0 && aroundX < Forest.forestHeight && aroundY < Forest.getForestWidth()) {
                         if (Forest.board.get(aroundX).get(aroundY).equals(Forest.H)) {
                             //DZIEDZICZENIE
+                            int temp = Forest.nontoxicMush;
                             interactionWithNontoxic(aroundX, aroundY);//check if nontoxic jest dziedziczone po mushroompickers
-                            return 0;//zwraca 0 bo nic sie nie dzieje
+                            if(temp - Forest.nontoxicMush == 1){//okazało się, że advanced wziął grzyba nontoxic
+                                Forest.advancedList.get(indexOfAdvanced).setScore(Forest.advancedList.get(indexOfAdvanced).getScore() + 1);
+                            }
+                            return 0;//zwracamy 0, gdy jest interakcja z nontoxic - nie zmniejsza się ilość beginnerów
                         } else if (Forest.board.get(aroundX).get(aroundY).equals(Forest.L)) {//L to są grzyby halucynki
                             interactionWithHallucination(x, y, aroundX, aroundY, indexOfAdvanced);
-                            return -1;//zwraca -1 bo ginie
+                            return -1;//zwraca -1, bo ginie
                         }
                     }
                 }
             }
-            return 0;//zwraca 0 bo nic sie nie dzieje
+            return 0;//zwraca 0, bo nic sie nie dzieje
         }
 }

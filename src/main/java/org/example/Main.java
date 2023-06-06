@@ -1,10 +1,5 @@
 package org.example;
 
-//do zrobienia jeszcze:
-//-wypisanie kto zebrał ile grzybów
-//-ostatnia uwaga w mailu
-//-wizualizacja symulacji
-
 public class Main {
     public static void main(String[] args) {
         /*
@@ -20,21 +15,21 @@ public class Main {
 
         int iteraction = 0;
         if (Forest.getForestWidth() < 0 && Forest.getForestWidth() > 100
-                && Forest.forestHeight < 0 && Forest.forestHeight > 100) {
+                || Forest.forestHeight < 0 && Forest.forestHeight > 100) {
             System.out.println("wpisano zle parametry planszy");
         } else if (Forest.percentOfToxic > 100 && Forest.percentOfToxic < 0
-                && Forest.percentOfHallucination > 100 && Forest.percentOfHallucination < 0
-                && Forest.mushrooms <= 0//grzybów musi byc minimum 1
-                && Forest.mushrooms > Forest.getForestWidth() * Forest.forestHeight - 1
-                && Forest.percentOfHallucination + Forest.percentOfToxic > 100) {//nie może byc wiecej niż 100% grzybów
+                || Forest.percentOfHallucination > 100 && Forest.percentOfHallucination < 0
+                || Forest.mushrooms <= 0//grzybów musi byc minimum 1
+                || Forest.mushrooms > Forest.getForestWidth() * Forest.forestHeight - 1
+                || Forest.percentOfHallucination + Forest.percentOfToxic > 100) {//nie może byc wiecej niż 100% grzybów
             System.out.println("wpisano zle parametry grzybow");
         } else if (Forest.beginnerPickers < 0
-                && Forest.beginnerPickers > Forest.getForestWidth() * Forest.forestHeight - Forest.mushrooms
-                && Forest.advancedPickers < 0
-                && Forest.advancedPickers > Forest.getForestWidth() * Forest.forestHeight - Forest.mushrooms - Forest.beginnerPickers
-                && Forest.intermediatePickers < 0
-                && Forest.intermediatePickers > Forest.getForestWidth() * Forest.forestHeight - Forest.mushrooms - Forest.beginnerPickers - Forest.advancedPickers
-                && Forest.intermediatePickers + Forest.advancedPickers + Forest.beginnerPickers <= 0) {//nie może nie byc grzybiarzy - symulacje bez sensu
+                || Forest.beginnerPickers > Forest.getForestWidth() * Forest.forestHeight - Forest.mushrooms
+                || Forest.advancedPickers < 0
+                || Forest.advancedPickers > Forest.getForestWidth() * Forest.forestHeight - Forest.mushrooms - Forest.beginnerPickers
+                || Forest.intermediatePickers < 0
+                || Forest.intermediatePickers > Forest.getForestWidth() * Forest.forestHeight - Forest.mushrooms - Forest.beginnerPickers - Forest.advancedPickers
+                || Forest.intermediatePickers + Forest.advancedPickers + Forest.beginnerPickers <= 0) {//nie może nie byc grzybiarzy - symulacje bez sensu
             System.out.println("wpisano zle parametry grzybiarzy");
         } else {
 
@@ -62,7 +57,7 @@ public class Main {
                 Forest.hallucinationMushroomList.add(hallucination);
             }
 
-            for (int i = 0; i < Forest.beginnerPickers; i++) {//dopisywanie begginerów do planszy
+            for (int i = 0; i < Forest.beginnerPickers; i++) {//dopisywanie beginnerów do planszy
                 int[] coordinatesOfBegginer = BeginnerMushroomPicker.checkAndGiveFirstPosition(Forest.B);
                 int coordinateX = coordinatesOfBegginer[0];//x
                 int coordinateY = coordinatesOfBegginer[1];//y
@@ -149,7 +144,27 @@ public class Main {
                 System.out.println("Zginelo " + Forest.dead + " grzybiarzy");
                 System.out.println("Liczba iteracji: " + iteraction);
             }
+            System.out.println();
 
+            //wypisanie grzybiarzy, którzy przeżyli i ilości grzybów, jakie zebrali
+            System.out.println("Ilosci zebranych grzybow:");
+            System.out.println("grzybiarze zaawansowani:");
+            for (int i = 0; i < Forest.advancedList.size(); i++)
+            {
+                System.out.println("grzybiarz" + i+1 +" ilosc: " + Forest.advancedList.get(i).getScore());
+            }
+            System.out.println();
+            System.out.println("grzybiarze sredniozaawansowani:");
+            for (int i = 0; i < Forest.intermediateList.size(); i++)
+            {
+                System.out.println("grzybiarz" + i+1 + " ilosc: " + Forest.intermediateList.get(i).getScore());
+            }
+            System.out.println();
+            System.out.println("grzybiarze poczatkujacy:");
+            for (int i = 0; i < Forest.beginnersList.size(); i++)
+            {
+                System.out.println("grzybiarz" + i+1 + " ilosc " + Forest.beginnersList.get(i).getScore());
+            }
         }
         /*
         System.out.println("Przykładowe parametry wejściowe:");

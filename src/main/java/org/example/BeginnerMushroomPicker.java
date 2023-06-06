@@ -13,19 +13,19 @@ public class BeginnerMushroomPicker extends MushroomPicker {
             if (Forest.beginnersList.get(i).getPositionX() == x && Forest.beginnersList.get(i).getPositionY() == y) {
                 Forest.beginnersList.get(i).setPositionX(randomX);
                 Forest.beginnersList.get(i).setPositionY(randomY);
-                break;//wychodzimy bo już znaleźliśmy
+                break;//wychodzimy, bo już znaleźliśmy
             }
         }
     }
 
     private static void interactionWithToxic(int x, int y, int aroundX, int aroundY, int indexOfBeginner){
-        for(int k = 0; k < Forest.toxicMushroomList.size() ; k++){//skanujemy po całej liście grzybow toxic i czekamy aż pętla natrafi na takowego
+        for(int k = 0; k < Forest.toxicMushroomList.size() ; k++){//skanujemy po całej liście grzybow toxic i czekamy, aż pętla natrafi na takowego
             if(Forest.toxicMushroomList.get(k).getPositionX() == aroundX && Forest.toxicMushroomList.get(k).getPositionY() == aroundY){
                 Forest.board.get(aroundX).set(aroundY, Forest.X);//ustawienie na planszy, że grzyb toxic jest zjedzony
                 Forest.board.get(x).set(y, Forest.X);//ustawienie na planszy, że beginner zginął
-                Forest.toxicMushroomList.remove(k);//usunięcie grzyba toxic z arraylisty bo został zjedzony
+                Forest.toxicMushroomList.remove(k);//usunięcie grzyba toxic z arraylisty, bo został zjedzony
                 Forest.toxicMush--;
-                Forest.beginnersList.remove(indexOfBeginner);//usunięcie beginnera z listy bo zginął
+                Forest.beginnersList.remove(indexOfBeginner);//usunięcie beginnera z listy, bo zginął
                 Forest.dead++;//zliczanie umarłych
                 break;
             }
@@ -44,14 +44,14 @@ public class BeginnerMushroomPicker extends MushroomPicker {
                         //DZIEDZICZENIE
                         int temp = Forest.nontoxicMush;
                         interactionWithNontoxic(aroundX, aroundY);//check if nontoxic jest dziedziczone po mushroompickers
-                        if(temp - Forest.nontoxicMush == 1){//okazalo sie ze begginer wziol grzyba nontoxic
+                        if(temp - Forest.nontoxicMush == 1){//okazało się, że beginner wziął grzyba nontoxic
                             Forest.beginnersList.get(indexOfBeginner).setScore(Forest.beginnersList.get(indexOfBeginner).getScore() + 1);
                         }
-                        return 0;//zwracamy 0 gdy jest interakcja z nontoxic - nie zmniejsza się ilosc begginerów
+                        return 0;//zwracamy 0, gdy jest interakcja z nontoxic - nie zmniejsza się ilość beginnerów
                     }
                     else if(Forest.board.get(aroundX).get(aroundY).equals(Forest.P)) {//P to są toxic grzyby
                         interactionWithToxic(x, y, aroundX, aroundY, indexOfBeginner);
-                        return -1;//zwracamy -1 gdy jest innterakcja z toxic - ginie begginer
+                        return -1;//zwracamy -1, gdy jest interakcja z toxic - ginie beginner
                     }
 
                 }

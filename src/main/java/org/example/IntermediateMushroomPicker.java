@@ -23,7 +23,13 @@ public class IntermediateMushroomPicker extends MushroomPicker {
                 aroundY = y + j;//tutaj mamy pozycję y wokół postaci
                 if (aroundX >= 0 && aroundY >= 0 && aroundX < Forest.forestHeight && aroundY < Forest.getForestWidth()) {
                     if (Forest.board.get(aroundX).get(aroundY).equals(Forest.H)) {
-                        MushroomPicker.interactionWithNontoxic(aroundX, aroundY);
+                        //DZIEDZICZENIE
+                        int temp = Forest.nontoxicMush;
+                        interactionWithNontoxic(aroundX, aroundY);//check if nontoxic jest dziedziczone po mushroompickers
+                        if(temp - Forest.nontoxicMush == 1){//okazało się, że beginner wziął grzyba nontoxic
+                            Forest.intermediateList.get(indexOfIntermediate).setScore(Forest.intermediateList.get(indexOfIntermediate).getScore() + 1);
+                        }
+                        return 0;//zwracamy 0, gdy jest interakcja z nontoxic - nie zmniejsza się ilość beginnerów
                     }
                     else if (Forest.board.get(aroundX).get(aroundY).equals(Forest.P)) {//P to są toxic grzyby
                         int k;
@@ -52,13 +58,13 @@ public class IntermediateMushroomPicker extends MushroomPicker {
                     Forest.board.get(x).set(y, Forest.X);//ustawienie na planszy, że intermediate zginął
                     Forest.toxicMushroomList.remove(k);//usunięcie grzyba toxic z arraylisty, bo został zjedzony
                     Forest.toxicMush--;
-                    Forest.intermediateList.remove(indexOfIntermediate);//usunięcie intermedaite z listy bo zginął
+                    Forest.intermediateList.remove(indexOfIntermediate);//usunięcie intermedaite z listy, bo zginął
                     Forest.dead++;//zliczanie umarłych
-                    return -1;//zwraca -1 bo intermediate ginie
+                    return -1;//zwraca -1, bo intermediate ginie
                 }
                 else{//intermediate zjada, ale nie ginie
                     Forest.board.get(aroundX).set(aroundY, Forest.X);//ustawienie na planszy, że grzyb toxic jest zjedzony
-                    Forest.toxicMushroomList.remove(k);//usunięcie grzyba toxic z arraylisty bo został zjedzony
+                    Forest.toxicMushroomList.remove(k);//usunięcie grzyba toxic z arraylisty, bo został zjedzony
                     Forest.toxicMush--;
                     return 0;//zwraca 0 bo intermediate nie ginie
                 }
@@ -86,13 +92,13 @@ public class IntermediateMushroomPicker extends MushroomPicker {
                     Forest.hallucinationMush--;
                     Forest.intermediateList.remove(indexOfIntermediate);//usunięcie intermediate z listy bo zginął
                     Forest.dead++;//zliczanie umarłych
-                    return -1;//zwraca -1 bo intermediate ginie
+                    return -1;//zwraca -1, bo intermediate ginie
                 }
                 else{//intermediate zjada ale nie ginie
                     Forest.board.get(aroundX).set(aroundY, Forest.X);//ustawienie na planszy, że grzyb halucynek jest zjedzony
                     Forest.hallucinationMushroomList.remove(k);//usunięcie grzyba toxic z arraylisty bo został zjedzony
                     Forest.hallucinationMush--;
-                    return 0;//zwraca 0 bo intermediate nie ginie
+                    return 0;//zwraca 0, bo intermediate nie ginie
                 }
             }
         }

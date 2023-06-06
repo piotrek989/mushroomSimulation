@@ -9,7 +9,7 @@ public abstract class MushroomPicker {
     private int positionY;
     public MushroomPicker(int score, int positionX, int positionY) {
         this.score = score;
-        this.positionX = positionX;//this.positionX daje nam parametry obiektu, którego u nas utworzylismy w mainie
+        this.positionX = positionX;//this.positionX daje nam parametry obiektu, którego u nas utworzyliśmy w mainie
         this.positionY = positionY;
     }
     public int getPositionX() {//getter
@@ -61,9 +61,8 @@ public abstract class MushroomPicker {
         for(int k = 0; k < Forest.nontoxicMushroomList.size() ; k++){
             if(Forest.nontoxicMushroomList.get(k).getPositionX() == aroundX && Forest.nontoxicMushroomList.get(k).getPositionY() == aroundY){
                 Forest.board.get(aroundX).set(aroundY, Forest.X);//ustawienie na planszy, że grzyb healthy jest zjedzony
-                Forest.nontoxicMushroomList.remove(k);//usunięcie grzyba healthy z arraylisty bo został zjedzony
+                Forest.nontoxicMushroomList.remove(k);//usunięcie grzyba healthy z arraylisty, bo został zjedzony
                 Forest.nontoxicMush--;
-
                 break;
             }
         }
