@@ -151,19 +151,19 @@ public class Main {
             System.out.println("grzybiarze zaawansowani:");
             for (int i = 0; i < Forest.advancedList.size(); i++)
             {
-                System.out.println("grzybiarz" + i+1 +" ilosc: " + Forest.advancedList.get(i).getScore());
+                System.out.println("grzybiarz" + (i+1) +" ilosc: " + Forest.advancedList.get(i).getScore());
             }
             System.out.println();
             System.out.println("grzybiarze sredniozaawansowani:");
             for (int i = 0; i < Forest.intermediateList.size(); i++)
             {
-                System.out.println("grzybiarz" + i+1 + " ilosc: " + Forest.intermediateList.get(i).getScore());
+                System.out.println("grzybiarz" + (i+1) + " ilosc: " + Forest.intermediateList.get(i).getScore());
             }
             System.out.println();
             System.out.println("grzybiarze poczatkujacy:");
             for (int i = 0; i < Forest.beginnersList.size(); i++)
             {
-                System.out.println("grzybiarz" + i+1 + " ilosc " + Forest.beginnersList.get(i).getScore());
+                System.out.println("grzybiarz" + (i+1) + " ilosc " + Forest.beginnersList.get(i).getScore());
             }
         }
         /*
