@@ -58,7 +58,7 @@ public class Main {
             }
 
             for (int i = 0; i < Forest.beginnerPickers; i++) {//dopisywanie beginnerów do planszy
-                int[] coordinatesOfBegginer = BeginnerMushroomPicker.checkAndGiveFirstPosition(Forest.B);
+                int[] coordinatesOfBegginer = MushroomPicker.checkAndGiveFirstPosition(Forest.B);
                 int coordinateX = coordinatesOfBegginer[0];//x
                 int coordinateY = coordinatesOfBegginer[1];//y
                 BeginnerMushroomPicker begginer = new BeginnerMushroomPicker(0, coordinateX, coordinateY);//firelement to x, secelement to y
@@ -85,15 +85,15 @@ public class Main {
             while (true) {
                 for (int i = 0, k = 0, m = 0; m < Forest.advancedList.size() || i < Forest.beginnersList.size() || k < Forest.intermediateList.size(); i++, k++, m++) {//sprawdza co jest wokół grzybiarzy od 1 do ostatniego!
                     if (i < Forest.beginnersList.size()) {//musimy sprawdzać ten warunek
-                        int n = BeginnerMushroomPicker.checkTheKind(Forest.beginnersList.get(i).getPositionX(), Forest.beginnersList.get(i).getPositionY(), i, "B");//metoda zwraca 0 gdy begginer nie ginie i -1 gdy ginie
+                        int n = MushroomPicker.checkTheKind(Forest.beginnersList.get(i).getPositionX(), Forest.beginnersList.get(i).getPositionY(), i, "B");//metoda zwraca 0 gdy begginer nie ginie i -1 gdy ginie
                         i = i + n;
                     }
                     if (k < Forest.intermediateList.size()) {//musimy sprawdzać ten warunek
-                        int n = IntermediateMushroomPicker.checkTheKind(Forest.intermediateList.get(k).getPositionX(), Forest.intermediateList.get(k).getPositionY(), k,"I");//metoda zwraca 0 gdy intermediate nie ginie i -1 gdy ginie
+                        int n = MushroomPicker.checkTheKind(Forest.intermediateList.get(k).getPositionX(), Forest.intermediateList.get(k).getPositionY(), k,"I");//metoda zwraca 0 gdy intermediate nie ginie i -1 gdy ginie
                         k = k + n;
                     }
                     if (m < Forest.advancedList.size()) {//musimy sprawdzać ten warunek
-                        int n = AdvancedMushroomPicker.checkTheKind(Forest.advancedList.get(m).getPositionX(), Forest.advancedList.get(m).getPositionY(), m,"A");//metoda zwraca 0 gdy advanced nie ginie i -1 gdy ginie
+                        int n = MushroomPicker.checkTheKind(Forest.advancedList.get(m).getPositionX(), Forest.advancedList.get(m).getPositionY(), m,"A");//metoda zwraca 0 gdy advanced nie ginie i -1 gdy ginie
                         m = m + n;
                     }
                     //sytuacja, w której nie ma już grzybów
@@ -122,13 +122,13 @@ public class Main {
                 Forest.forestPrint();
 
                 for (int n = 0; n < Forest.beginnersList.size(); n++) {//random walk
-                    BeginnerMushroomPicker.randomWalk(Forest.beginnersList.get(n).getPositionX(), Forest.beginnersList.get(n).getPositionY(), Forest.B);//sprawdzamy czy wokól postaci begginer nie ma czasem grzyba jadalnego którego może zebrac
+                    MushroomPicker.randomWalk(Forest.beginnersList.get(n).getPositionX(), Forest.beginnersList.get(n).getPositionY(), Forest.B);//sprawdzamy czy wokól postaci begginer nie ma czasem grzyba jadalnego którego może zebrac
                 }
                 for (int u = 0; u < Forest.intermediateList.size(); u++) {//random walk
-                    IntermediateMushroomPicker.randomWalk(Forest.intermediateList.get(u).getPositionX(), Forest.intermediateList.get(u).getPositionY(), Forest.I);
+                    MushroomPicker.randomWalk(Forest.intermediateList.get(u).getPositionX(), Forest.intermediateList.get(u).getPositionY(), Forest.I);
                 }
                 for (int l = 0; l < Forest.advancedList.size(); l++) {//random walk
-                    AdvancedMushroomPicker.randomWalk(Forest.advancedList.get(l).getPositionX(), Forest.advancedList.get(l).getPositionY(), Forest.A);
+                    MushroomPicker.randomWalk(Forest.advancedList.get(l).getPositionX(), Forest.advancedList.get(l).getPositionY(), Forest.A);
                 }
                 System.out.println();
                 Forest.forestPrint();

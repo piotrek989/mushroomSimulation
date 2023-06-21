@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.Random;
 
-public abstract class MushroomPicker {
+public class MushroomPicker {
 
     private int score;//nie static bo każdy obiekt ma inny score
     private int positionX;
@@ -84,6 +84,69 @@ public abstract class MushroomPicker {
                         Forest.toxicMushroomList.remove(k);//usunięcie grzyba toxic z arraylisty, bo został zjedzony
                         Forest.toxicMush--;
                         return 0;//zwraca 0 bo intermediate nie ginie
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+    public static int checkTheKind(int x, int y, int indexOfPicker, String signOfPicker){
+        int aroundX = 0;//tutaj mamy pozycje x wokół postaci
+        int aroundY = 0;
+        for(int i = -1 ;i<=1;i++){
+            for (int j = -1; j<=1 ; j++){
+                aroundX = x + i;//tutaj mamy pozycję x wokół postaci
+                aroundY = y + j;//tutaj mamy pozycję y wokół postaci
+                if (aroundX >= 0 && aroundY >= 0 && aroundX < Forest.forestHeight && aroundY < Forest.getForestWidth()){
+                    if(signOfPicker.equals("B")) {
+                        if (Forest.board.get(aroundX).get(aroundY).equals(Forest.H)) {
+                            //DZIEDZICZENIE
+                            int temp = Forest.nontoxicMush;
+                            interactionWithNontoxic(aroundX, aroundY);//check if nontoxic jest dziedziczone po mushroompickers
+                            if (temp - Forest.nontoxicMush == 1) {//okazało się, że beginner wziął grzyba nontoxic
+                                Forest.beginnersList.get(indexOfPicker).setScore(Forest.beginnersList.get(indexOfPicker).getScore() + 1);
+                            }
+                            return 0;//zwracamy 0, gdy jest interakcja z nontoxic - nie zmniejsza się ilość beginnerów
+                        } else if (Forest.board.get(aroundX).get(aroundY).equals(Forest.P)) {//P to są toxic grzyby
+                            interactionWithToxic(x, y, aroundX, aroundY, indexOfPicker, signOfPicker);
+                            return -1;//zwracamy -1, gdy jest interakcja z toxic - ginie beginner
+                        }
+                    }
+                    else if(signOfPicker.equals("I")){
+                        if (Forest.board.get(aroundX).get(aroundY).equals(Forest.H)) {
+                            //DZIEDZICZENIE
+                            int temp = Forest.nontoxicMush;
+                            interactionWithNontoxic(aroundX, aroundY);//check if nontoxic jest dziedziczone po mushroompickers
+                            if(temp - Forest.nontoxicMush == 1){//okazało się, że beginner wziął grzyba nontoxic
+                                Forest.intermediateList.get(indexOfPicker).setScore(Forest.intermediateList.get(indexOfPicker).getScore() + 1);
+                            }
+                            return 0;//zwracamy 0, gdy jest interakcja z nontoxic - nie zmniejsza się ilość beginnerów
+                        }
+                        else if (Forest.board.get(aroundX).get(aroundY).equals(Forest.P)) {//P to są toxic grzyby
+                            int k;
+                            k = interactionWithToxic(x, y, aroundX, aroundY, indexOfPicker, signOfPicker);
+                            return k;
+
+                        }
+                        else if (Forest.board.get(aroundX).get(aroundY).equals(Forest.L)) {//L to są halucynogenne grzyby
+                            int k;
+                            k = interactionWithHallucination(x, y, aroundX, aroundY, indexOfPicker, signOfPicker);
+                            return k;
+                        }
+                    }
+                    else if(signOfPicker.equals("A")){
+                        if (Forest.board.get(aroundX).get(aroundY).equals(Forest.H)) {
+                            //DZIEDZICZENIE
+                            int temp = Forest.nontoxicMush;
+                            interactionWithNontoxic(aroundX, aroundY);//check if nontoxic jest dziedziczone po mushroompickers
+                            if(temp - Forest.nontoxicMush == 1){//okazało się, że advanced wziął grzyba nontoxic
+                                Forest.advancedList.get(indexOfPicker).setScore(Forest.advancedList.get(indexOfPicker).getScore() + 1);
+                            }
+                            return 0;//zwracamy 0, gdy jest interakcja z nontoxic - nie zmniejsza się ilość beginnerów
+                        } else if (Forest.board.get(aroundX).get(aroundY).equals(Forest.L)) {//L to są grzyby halucynki
+                            interactionWithHallucination(x, y, aroundX, aroundY, indexOfPicker, signOfPicker);
+                            return -1;//zwraca -1, bo ginie
+                        }
                     }
                 }
             }
@@ -188,7 +251,7 @@ public abstract class MushroomPicker {
                 Forest.board.get(randomX).set(randomY, signOfPicker);//nowa pozycja beginnera
                 Forest.board.get(x).set(y, Forest.X);//stare pole staje się polem X
                 if (signOfPicker.equals(Forest.B)) {//beginner
-                    BeginnerMushroomPicker.changePositionAfterRandomWalk(x, y, randomX, randomY, signOfPicker);
+                    MushroomPicker.changePositionAfterRandomWalk(x, y, randomX, randomY, signOfPicker);
                 } else if (signOfPicker.equals(Forest.I)) {//intermediate
                     IntermediateMushroomPicker.changePositionAfterRandomWalk(x, y, randomX, randomY, signOfPicker);
                 } else if (signOfPicker.equals(Forest.A)) {//advanced
