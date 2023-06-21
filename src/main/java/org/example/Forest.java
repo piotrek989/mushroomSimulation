@@ -2,7 +2,7 @@ package org.example;
 import java.util.ArrayList;
 
 public class Forest {
-    public static int forestWidth = 7; //szerokość lasu
+    public static int forestWidth = 10; //szerokość lasu
     public static int forestHeight = 5; //wysokość lasu
     public static final int mushrooms = 12;//liczba wszystkich grzybów
     public static final double percentOfToxic = 50;//procent grzybów toksycznych
@@ -14,9 +14,9 @@ public class Forest {
     public static int toxicMush = Forest.mushrooms *(int) Forest.percentOfToxic /100;//liczba grzybów toxic
     public static int hallucinationMush = Forest.mushrooms *(int) Forest.percentOfHallucination /100;//liczba grzybów hallucynogennych
     public static ArrayList<ArrayList<String>> board = new ArrayList<ArrayList<String>>();//tutaj przechowyway jest las z wszystkimi polami
-    public static ArrayList<BeginnerMushroomPicker> beginnersList = new ArrayList<>();//przechowuje beginnerów
-    public static ArrayList<IntermediateMushroomPicker> intermediateList = new ArrayList<>();//przechowuje intermediate
-    public static ArrayList<AdvancedMushroomPicker> advancedList = new ArrayList<>();//przechowuje advanced
+    public static ArrayList<MushroomPicker> beginnersList = new ArrayList<>();//przechowuje beginnerów
+    public static ArrayList<MushroomPicker> intermediateList = new ArrayList<>();//przechowuje intermediate
+    public static ArrayList<MushroomPicker> advancedList = new ArrayList<>();//przechowuje advanced
     public static ArrayList<NontoxicMushroom> nontoxicMushroomList = new ArrayList<>();//przechowuje grzyby nontoxic
     public static ArrayList<ToxicMushroom>  toxicMushroomList= new ArrayList<>();//przechowuje grzyby toxic
     public static ArrayList<HallucinationMushroom> hallucinationMushroomList = new ArrayList<>();//przechowuje grzyby hallucination

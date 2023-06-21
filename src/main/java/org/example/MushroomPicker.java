@@ -153,7 +153,6 @@ public class MushroomPicker {
         }
         return 0;
     }
-
     public static int interactionWithHallucination(int x, int y, int aroundX, int aroundY, int indexOfPicker, String signOfPicker){
         for(int k = 0; k < Forest.hallucinationMushroomList.size() ; k++){//skanujemy po całej liście grzybOw halucynków i czekamy, aż pętla natrafi na takowego
             if(Forest.hallucinationMushroomList.get(k).getPositionX() == aroundX && Forest.hallucinationMushroomList.get(k).getPositionY() == aroundY) {
@@ -189,7 +188,6 @@ public class MushroomPicker {
     public static boolean losowanie() {//losuje i zwraca true albo false szansa 50/50
         Random random = new Random();
         double losowaWartosc = random.nextDouble();
-
         if (losowaWartosc < 0.5) {
             return true;
         } else {
@@ -207,8 +205,6 @@ public class MushroomPicker {
             }
         }
     }
-
-
     public static void changePositionAfterRandomWalk(int x, int y, int randomX, int randomY, String signOfPicker) {
         if(signOfPicker.equals(Forest.B)) {
             for (int i = 0; i < Forest.beginnersList.size(); i++) {//sprawdzamy, który z tych begginerów ma taką pozycję i zmieniamy mu ją
@@ -238,7 +234,6 @@ public class MushroomPicker {
             }
         }
     }
-
     public static void randomWalk(int x, int y, String signOfPicker) {//to metoda dziedziczona przez innych zbieraczy
 
         Random liczba = new Random();
@@ -253,9 +248,9 @@ public class MushroomPicker {
                 if (signOfPicker.equals(Forest.B)) {//beginner
                     MushroomPicker.changePositionAfterRandomWalk(x, y, randomX, randomY, signOfPicker);
                 } else if (signOfPicker.equals(Forest.I)) {//intermediate
-                    IntermediateMushroomPicker.changePositionAfterRandomWalk(x, y, randomX, randomY, signOfPicker);
+                    MushroomPicker.changePositionAfterRandomWalk(x, y, randomX, randomY, signOfPicker);
                 } else if (signOfPicker.equals(Forest.A)) {//advanced
-                    AdvancedMushroomPicker.changePositionAfterRandomWalk(x, y, randomX, randomY, signOfPicker);
+                    MushroomPicker.changePositionAfterRandomWalk(x, y, randomX, randomY, signOfPicker);
                 }
                 break;
             }

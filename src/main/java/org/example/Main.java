@@ -61,21 +61,21 @@ public class Main {
                 int[] coordinatesOfBegginer = MushroomPicker.checkAndGiveFirstPosition(Forest.B);
                 int coordinateX = coordinatesOfBegginer[0];//x
                 int coordinateY = coordinatesOfBegginer[1];//y
-                BeginnerMushroomPicker begginer = new BeginnerMushroomPicker(0, coordinateX, coordinateY);//firelement to x, secelement to y
+                MushroomPicker begginer = new MushroomPicker(0, coordinateX, coordinateY);//firelement to x, secelement to y
                 Forest.beginnersList.add(begginer);
             }
             for (int i = 0; i < Forest.advancedPickers; i++) {//dopisywanie advanced do planszy
-                int[] coordinatesOfAdvanced = AdvancedMushroomPicker.checkAndGiveFirstPosition(Forest.A);
+                int[] coordinatesOfAdvanced = MushroomPicker.checkAndGiveFirstPosition(Forest.A);
                 int coordinateX = coordinatesOfAdvanced[0];//x
                 int coordinateY = coordinatesOfAdvanced[1];//y
-                AdvancedMushroomPicker advanced = new AdvancedMushroomPicker(0, coordinateX, coordinateY);//firelement to x, secelement to y
+                MushroomPicker advanced = new MushroomPicker(0, coordinateX, coordinateY);//firelement to x, secelement to y
                 Forest.advancedList.add(advanced);
             }
             for (int i = 0; i < Forest.intermediatePickers; i++) {//dopisywanie intermediate do planszy
-                int[] coordinatesOfIntermediate = AdvancedMushroomPicker.checkAndGiveFirstPosition(Forest.I);
+                int[] coordinatesOfIntermediate = MushroomPicker.checkAndGiveFirstPosition(Forest.I);
                 int coordinateX = coordinatesOfIntermediate[0];//x
                 int coordinateY = coordinatesOfIntermediate[1];//y
-                IntermediateMushroomPicker intermediate = new IntermediateMushroomPicker(0, coordinateX, coordinateY);//firelement to x, secelement to y
+                MushroomPicker intermediate = new MushroomPicker(0, coordinateX, coordinateY);//firelement to x, secelement to y
                 Forest.intermediateList.add(intermediate);
             }
             Forest.forestPrint();
