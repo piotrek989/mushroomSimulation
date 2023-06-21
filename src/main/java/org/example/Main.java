@@ -85,15 +85,15 @@ public class Main {
             while (true) {
                 for (int i = 0, k = 0, m = 0; m < Forest.advancedList.size() || i < Forest.beginnersList.size() || k < Forest.intermediateList.size(); i++, k++, m++) {//sprawdza co jest wokół grzybiarzy od 1 do ostatniego!
                     if (i < Forest.beginnersList.size()) {//musimy sprawdzać ten warunek
-                        int n = BeginnerMushroomPicker.checkTheKind(Forest.beginnersList.get(i).getPositionX(), Forest.beginnersList.get(i).getPositionY(), i);//metoda zwraca 0 gdy begginer nie ginie i -1 gdy ginie
+                        int n = BeginnerMushroomPicker.checkTheKind(Forest.beginnersList.get(i).getPositionX(), Forest.beginnersList.get(i).getPositionY(), i, "B");//metoda zwraca 0 gdy begginer nie ginie i -1 gdy ginie
                         i = i + n;
                     }
                     if (k < Forest.intermediateList.size()) {//musimy sprawdzać ten warunek
-                        int n = IntermediateMushroomPicker.checkTheKind(Forest.intermediateList.get(k).getPositionX(), Forest.intermediateList.get(k).getPositionY(), k);//metoda zwraca 0 gdy intermediate nie ginie i -1 gdy ginie
+                        int n = IntermediateMushroomPicker.checkTheKind(Forest.intermediateList.get(k).getPositionX(), Forest.intermediateList.get(k).getPositionY(), k,"I");//metoda zwraca 0 gdy intermediate nie ginie i -1 gdy ginie
                         k = k + n;
                     }
                     if (m < Forest.advancedList.size()) {//musimy sprawdzać ten warunek
-                        int n = AdvancedMushroomPicker.checkTheKind(Forest.advancedList.get(m).getPositionX(), Forest.advancedList.get(m).getPositionY(), m);//metoda zwraca 0 gdy advanced nie ginie i -1 gdy ginie
+                        int n = AdvancedMushroomPicker.checkTheKind(Forest.advancedList.get(m).getPositionX(), Forest.advancedList.get(m).getPositionY(), m,"A");//metoda zwraca 0 gdy advanced nie ginie i -1 gdy ginie
                         m = m + n;
                     }
                     //sytuacja, w której nie ma już grzybów
@@ -137,14 +137,6 @@ public class Main {
             }
             //wypisanie wyników po skończonej symulacji
             System.out.println("---------- Podsumowanie symulacji ----------");
-            if (Forest.dead == 1) {
-                System.out.println("Zginal " + Forest.dead + " grzybiarz");
-                System.out.println("Liczba iteracji: " + iteraction);
-            } else {
-                System.out.println("Zginelo " + Forest.dead + " grzybiarzy");
-                System.out.println("Liczba iteracji: " + iteraction);
-            }
-            System.out.println();
 
             //wypisanie grzybiarzy, którzy przeżyli i ilości grzybów, jakie zebrali
             System.out.println("Ilosci zebranych grzybow:");
@@ -172,4 +164,4 @@ public class Main {
         System.out.println("szerokosc: " + param2);
         */
     }
-    }
+}

@@ -57,6 +57,83 @@ public abstract class MushroomPicker {
         return position;
     }
 
+    public static int interactionWithToxic(int x, int y, int aroundX, int aroundY, int indexOfPicker,String signOfPicker){
+        for(int k = 0; k < Forest.toxicMushroomList.size() ; k++){//skanujemy po całej liście grzybow toxic i czekamy, aż pętla natrafi na takowego
+            if(Forest.toxicMushroomList.get(k).getPositionX() == aroundX && Forest.toxicMushroomList.get(k).getPositionY() == aroundY) {
+                if (signOfPicker.equals("B")) {
+                    Forest.board.get(aroundX).set(aroundY, Forest.X);//ustawienie na planszy, że grzyb toxic jest zjedzony
+                    Forest.board.get(x).set(y, Forest.X);//ustawienie na planszy, że beginner zginął
+                    Forest.toxicMushroomList.remove(k);//usunięcie grzyba toxic z arraylisty, bo został zjedzony
+                    Forest.toxicMush--;
+                    Forest.beginnersList.remove(indexOfPicker);//usunięcie beginnera z listy, bo zginął
+                    Forest.deadBegg++;//zliczanie umarłych
+                    return 0;
+                }
+                else if(signOfPicker.equals("I")){
+                    if (losowanie()) {//jeśli losowanie zwróci prawdę to wchodzimy do tego if-a(intermediate zbiera grzyba i ginie)
+                        Forest.board.get(aroundX).set(aroundY, Forest.X);//ustawienie na planszy, że grzyb toxic jest zjedzony
+                        Forest.board.get(x).set(y, Forest.X);//ustawienie na planszy, że intermediate zginął
+                        Forest.toxicMushroomList.remove(k);//usunięcie grzyba toxic z arraylisty, bo został zjedzony
+                        Forest.toxicMush--;
+                        Forest.intermediateList.remove(indexOfPicker);//usunięcie intermedaite z listy, bo zginął
+                        Forest.deadInter++;//zliczanie umarłych
+                        return -1;//zwraca -1, bo intermediate ginie
+                    }
+                    else{//intermediate zjada, ale nie ginie
+                        Forest.board.get(aroundX).set(aroundY, Forest.X);//ustawienie na planszy, że grzyb toxic jest zjedzony
+                        Forest.toxicMushroomList.remove(k);//usunięcie grzyba toxic z arraylisty, bo został zjedzony
+                        Forest.toxicMush--;
+                        return 0;//zwraca 0 bo intermediate nie ginie
+                    }
+                }
+            }
+        }
+        return 0;
+    }
+
+    public static int interactionWithHallucination(int x, int y, int aroundX, int aroundY, int indexOfPicker, String signOfPicker){
+        for(int k = 0; k < Forest.hallucinationMushroomList.size() ; k++){//skanujemy po całej liście grzybOw halucynków i czekamy, aż pętla natrafi na takowego
+            if(Forest.hallucinationMushroomList.get(k).getPositionX() == aroundX && Forest.hallucinationMushroomList.get(k).getPositionY() == aroundY) {
+                if(signOfPicker.equals("I")) {
+                    if (losowanie()) {//jeśli losowanie zwróci prawdę to wchodzimy do tego if-a(intermediate zbiera grzyba i ginie)
+                        Forest.board.get(aroundX).set(aroundY, Forest.X);//ustawienie na planszy, że grzyb halucynek jest zjedzony
+                        Forest.board.get(x).set(y, Forest.X);//ustawienie na planszy że intermediate zginął
+                        Forest.hallucinationMushroomList.remove(k);//usunięcie grzyba toxic z arraylisty, bo został zjedzony
+                        Forest.hallucinationMush--;
+                        Forest.intermediateList.remove(indexOfPicker);//usunięcie intermediate z listy bo zginął
+                        Forest.deadInter++;//zliczanie umarłych
+                        return -1;//zwraca -1, bo intermediate ginie
+                    } else {//intermediate zjada ale nie ginie
+                        Forest.board.get(aroundX).set(aroundY, Forest.X);//ustawienie na planszy, że grzyb halucynek jest zjedzony
+                        Forest.hallucinationMushroomList.remove(k);//usunięcie grzyba toxic z arraylisty bo został zjedzony
+                        Forest.hallucinationMush--;
+                        return 0;//zwraca 0, bo intermediate nie ginie
+                    }
+                }
+                else if(signOfPicker.equals("A")){
+                    Forest.board.get(aroundX).set(aroundY, Forest.X);//ustawienie na planszy, że grzyb hallucination jest zjedzony
+                    Forest.board.get(x).set(y, Forest.X);//ustawienie na planszy, że advanced zginął
+                    Forest.hallucinationMushroomList.remove(k);//usunięcie grzyba halucynka z arraylisty, bo został zjedzony
+                    Forest.hallucinationMush--;
+                    Forest.advancedList.remove(indexOfPicker);//usunięcie advanced z listy, bo zginął
+                    Forest.deadAdv++;//zliczanie umarłych
+                    return 0;
+                }
+            }
+        }
+        return 0;
+    }
+    public static boolean losowanie() {//losuje i zwraca true albo false szansa 50/50
+        Random random = new Random();
+        double losowaWartosc = random.nextDouble();
+
+        if (losowaWartosc < 0.5) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static void interactionWithNontoxic(int aroundX, int aroundY) {
         for(int k = 0; k < Forest.nontoxicMushroomList.size() ; k++){
             if(Forest.nontoxicMushroomList.get(k).getPositionX() == aroundX && Forest.nontoxicMushroomList.get(k).getPositionY() == aroundY){
@@ -64,6 +141,37 @@ public abstract class MushroomPicker {
                 Forest.nontoxicMushroomList.remove(k);//usunięcie grzyba healthy z arraylisty, bo został zjedzony
                 Forest.nontoxicMush--;
                 break;
+            }
+        }
+    }
+
+
+    public static void changePositionAfterRandomWalk(int x, int y, int randomX, int randomY, String signOfPicker) {
+        if(signOfPicker.equals(Forest.B)) {
+            for (int i = 0; i < Forest.beginnersList.size(); i++) {//sprawdzamy, który z tych begginerów ma taką pozycję i zmieniamy mu ją
+                if (Forest.beginnersList.get(i).getPositionX() == x && Forest.beginnersList.get(i).getPositionY() == y) {
+                    Forest.beginnersList.get(i).setPositionX(randomX);
+                    Forest.beginnersList.get(i).setPositionY(randomY);
+                    break;//wychodzimy, bo już znaleźliśmy
+                }
+            }
+        }
+        else if (signOfPicker.equals(Forest.I)){
+            for (int i = 0; i < Forest.intermediateList.size(); i++) {//sprawdzamy, który z tych intermediate ma taką pozycję i zmieniamy mu ją
+                if (Forest.intermediateList.get(i).getPositionX() == x && Forest.intermediateList.get(i).getPositionY() == y) {
+                    Forest.intermediateList.get(i).setPositionX(randomX);
+                    Forest.intermediateList.get(i).setPositionY(randomY);
+                    break;//wychodzimy, bo już znaleźliśmy
+                }
+            }
+        }
+        else if(signOfPicker.equals(Forest.A)){
+            for (int i = 0; i < Forest.advancedList.size(); i++) {//sprawdzamy, który z tych intermediate ma taką pozycję i zmieniamy mu ją
+                if (Forest.advancedList.get(i).getPositionX() == x && Forest.advancedList.get(i).getPositionY() == y) {
+                    Forest.advancedList.get(i).setPositionX(randomX);
+                    Forest.advancedList.get(i).setPositionY(randomY);
+                    break;//wychodzimy, bo już znaleźliśmy
+                }
             }
         }
     }
@@ -80,16 +188,15 @@ public abstract class MushroomPicker {
                 Forest.board.get(randomX).set(randomY, signOfPicker);//nowa pozycja beginnera
                 Forest.board.get(x).set(y, Forest.X);//stare pole staje się polem X
                 if (signOfPicker.equals(Forest.B)) {//beginner
-                    BeginnerMushroomPicker.change_position_after_random_walk(x, y, randomX, randomY);
+                    BeginnerMushroomPicker.changePositionAfterRandomWalk(x, y, randomX, randomY, signOfPicker);
                 } else if (signOfPicker.equals(Forest.I)) {//intermediate
-                    IntermediateMushroomPicker.changePositionAfterRandomWalk(x, y, randomX, randomY);
+                    IntermediateMushroomPicker.changePositionAfterRandomWalk(x, y, randomX, randomY, signOfPicker);
                 } else if (signOfPicker.equals(Forest.A)) {//advanced
-                    AdvancedMushroomPicker.changePositionAfterRandomWalk(x, y, randomX, randomY);
+                    AdvancedMushroomPicker.changePositionAfterRandomWalk(x, y, randomX, randomY, signOfPicker);
                 }
-            break;
+                break;
             }
             iteracja++;
         }while(true && iteracja <= 10);//zakładamy, że po 10 losowaniach nie ma pola takiego, aby postawić tam postać i ona nie porusza się
     }
 }
-

@@ -2,14 +2,14 @@ package org.example;
 import java.util.ArrayList;
 
 public class Forest {
-    private static final int forestWidth = 5; //szerokość lasu
-    public static final int forestHeight = 5; //wysokość lasu
-    public static final int mushrooms = 5;//liczba wszystkich grzybów
+    public static int forestWidth = 7; //szerokość lasu
+    public static int forestHeight = 5; //wysokość lasu
+    public static final int mushrooms = 12;//liczba wszystkich grzybów
     public static final double percentOfToxic = 50;//procent grzybów toksycznych
-    public static final double percentOfHallucination = 0;//procent grzybów halucynków
-    public static final int beginnerPickers = 1;//liczba beginnerów
-    public static final int intermediatePickers = 3;//liczba intermediate
-    public static final int advancedPickers = 0;//liczba advanced
+    public static final double percentOfHallucination = 30;//procent grzybów halucynków
+    public static final int beginnerPickers = 4;//liczba beginnerów
+    public static final int intermediatePickers = 4;//liczba intermediate
+    public static final int advancedPickers = 4;//liczba advanced
     public static int nontoxicMush = mushrooms *(100-(int) percentOfHallucination -(int) percentOfToxic)/100;//liczba zdrowych grzybów
     public static int toxicMush = Forest.mushrooms *(int) Forest.percentOfToxic /100;//liczba grzybów toxic
     public static int hallucinationMush = Forest.mushrooms *(int) Forest.percentOfHallucination /100;//liczba grzybów hallucynogennych
@@ -20,7 +20,9 @@ public class Forest {
     public static ArrayList<NontoxicMushroom> nontoxicMushroomList = new ArrayList<>();//przechowuje grzyby nontoxic
     public static ArrayList<ToxicMushroom>  toxicMushroomList= new ArrayList<>();//przechowuje grzyby toxic
     public static ArrayList<HallucinationMushroom> hallucinationMushroomList = new ArrayList<>();//przechowuje grzyby hallucination
-    public static int dead = 0;//będzie zliczać ilość umarłych grzybiarzy
+    public static int deadBegg = 0;//będzie zliczać ilość umarłych grzybiarzy
+    public static int deadInter = 0;//będzie zliczać ilość umarłych grzybiarzy
+    public static int deadAdv = 0;//będzie zliczać ilość umarłych grzybiarzy
 
 
     public static int getForestWidth() {
