@@ -2,14 +2,14 @@ package org.example;
 import java.util.ArrayList;
 
 public class Forest {
-    public static int forestWidth = 10; //szerokość lasu
+    public static int forestWidth = 20; //szerokość lasu
     public static int forestHeight = 10; //wysokość lasu
     public static final int mushrooms = 25;//liczba wszystkich grzybów
-    public static final double percentOfToxic = 100;//procent grzybów toksycznych
+    public static final double percentOfToxic = 0;//procent grzybów toksycznych
     public static final double percentOfHallucination = 0;//procent grzybów halucynków
-    public static final int beginnerPickers = 10;//liczba beginnerów
-    public static final int intermediatePickers = 4;//liczba intermediate
-    public static final int advancedPickers = 4;//liczba advanced
+    public static final int beginnerPickers = 5;//liczba beginnerów
+    public static final int intermediatePickers = 5;//liczba intermediate
+    public static final int advancedPickers = 5;//liczba advanced
     public static int nontoxicMush = mushrooms *(100-(int) percentOfHallucination -(int) percentOfToxic)/100;//liczba zdrowych grzybów
     public static int toxicMush = Forest.mushrooms *(int) Forest.percentOfToxic /100;//liczba grzybów toxic
     public static int hallucinationMush = Forest.mushrooms *(int) Forest.percentOfHallucination /100;//liczba grzybów hallucynogennych
